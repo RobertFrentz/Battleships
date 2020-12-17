@@ -19,7 +19,7 @@ player_2_battleship_color = (0, 255, 0)
 players_same_color = False
 valid_done = True
 valid_tile_selection = True
-custom_tiles_positioning = True
+custom_tiles_positioning = False
 grid_column_size = 7
 grid_line_size = 7
 size_of_battleship = 4
@@ -27,7 +27,7 @@ game_winner = 0
 # </editor-fold>
 
 # <editor-fold desc = "Image resources">
-pygame.display.set_caption("Battleships")
+pygame.display.set_caption("Battleships 1.0")
 game_icon = pygame.image.load("Resources/Battleships_icon.jpg")
 game_background = pygame.image.load("Resources/Battleships_background.png")
 button = pygame.image.load("Resources/Battleships_default_button.png")
