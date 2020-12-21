@@ -28,7 +28,7 @@ show_own_battleship = False
 # </editor-fold>
 
 # <editor-fold desc = "Image resources">
-pygame.display.set_caption("Battleships 1.0")
+pygame.display.set_caption("Battleships 1.0.1")
 game_icon = pygame.image.load("Resources/Battleships_icon.jpg")
 game_background = pygame.image.load("Resources/Battleships_background.png")
 button = pygame.image.load("Resources/Battleships_default_button.png")
