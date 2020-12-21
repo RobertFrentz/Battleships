@@ -24,6 +24,7 @@ grid_column_size = 7
 grid_line_size = 7
 size_of_battleship = 4
 game_winner = 0
+show_own_battleship = False
 # </editor-fold>
 
 # <editor-fold desc = "Image resources">
@@ -137,7 +138,7 @@ def draw_grid():
             window.blit(grid_rectangle, grid_element)
 
 
-def check_is_game_over():
+def is_game_over():
     global game_winner, game_winner_text
     if player_turn == 1:
         for rect in player_1_battleship:
@@ -276,7 +277,7 @@ def draw_choosing_battleships_scene():
 
 def draw_game_started_scene():
     draw_grid()
-    game_over = check_is_game_over()
+    game_over = is_game_over()
     window.blit(button, back_button_rect)
     window.blit(back_button_text, (50, 20))
     if not game_over:
@@ -285,48 +286,65 @@ def draw_game_started_scene():
         window.blit(instructions5_text, (50, 120))
         if player_turn == 1:
             window.blit(player_1_turn_text, (250, 30))
-            for rect in player_1_battleship:
-                if rect in player_1_hits and rect not in player_2_battleship:
-                    player_1_hits.remove(rect)
-                if rect not in player_1_hits:
-                    battleship_tile = pygame.Rect(rect.x + 20, rect.y + 10, 40, 40)
-                    pygame.draw.rect(window, player_1_battleship_color, battleship_tile)
-            for rect in player_1_hits:
-                if rect in player_2_battleship:
-                    if rect not in player_1_battleship:
+            if show_own_battleship:
+                for rect in player_1_battleship:
+                    if rect in player_1_hits and rect not in player_2_battleship:
+                        player_1_hits.remove(rect)
+                    if rect not in player_1_hits:
+                        battleship_tile = pygame.Rect(rect.x + 20, rect.y + 10, 40, 40)
+                        pygame.draw.rect(window, player_1_battleship_color, battleship_tile)
+                for rect in player_1_hits:
+                    if rect in player_2_battleship:
+                        if rect not in player_1_battleship:
+                            battleship_tile = pygame.Rect(rect.x + 20, rect.y + 10, 40, 40)
+                            pygame.draw.rect(window, player_2_battleship_color, battleship_tile)
+                        else:
+                            battleship2_tile = pygame.Rect(rect.x + 10, rect.y + 15, 30, 30)
+                            pygame.draw.rect(window, player_2_battleship_color, battleship2_tile)
+                            battleship1_tile = pygame.Rect(rect.x + 45, rect.y + 15, 30, 30)
+                            pygame.draw.rect(window, player_1_battleship_color, battleship1_tile)
+                    if rect not in player_2_battleship:
+                        if rect not in player_1_battleship:
+                            battleship_tile = pygame.Rect(rect.x + 20, rect.y + 10, 40, 40)
+                            pygame.draw.rect(window, (255, 255, 255), battleship_tile)
+            elif not show_own_battleship:
+                for rect in player_1_hits:
+                    if rect in player_2_battleship:
                         battleship_tile = pygame.Rect(rect.x + 20, rect.y + 10, 40, 40)
                         pygame.draw.rect(window, player_2_battleship_color, battleship_tile)
                     else:
-                        battleship2_tile = pygame.Rect(rect.x + 10, rect.y + 15, 30, 30)
-                        pygame.draw.rect(window, player_2_battleship_color, battleship2_tile)
-                        battleship1_tile = pygame.Rect(rect.x + 45, rect.y + 15, 30, 30)
-                        pygame.draw.rect(window, player_1_battleship_color, battleship1_tile)
-                if rect not in player_2_battleship:
-                    if rect not in player_1_battleship:
                         battleship_tile = pygame.Rect(rect.x + 20, rect.y + 10, 40, 40)
                         pygame.draw.rect(window, (255, 255, 255), battleship_tile)
-
         elif player_turn == 2:
             window.blit(player_2_turn_text, (250, 30))
-            for rect in player_2_battleship:
-                if rect in player_2_hits and rect not in player_1_battleship:
-                    player_2_hits.remove(rect)
-                if rect not in player_2_hits:
-                    battleship_tile = pygame.Rect(rect.x + 20, rect.y + 10, 40, 40)
-                    pygame.draw.rect(window, player_2_battleship_color, battleship_tile)
+            if show_own_battleship:
+                for rect in player_2_battleship:
+                    if rect in player_2_hits and rect not in player_1_battleship:
+                        player_2_hits.remove(rect)
+                    if rect not in player_2_hits:
+                        battleship_tile = pygame.Rect(rect.x + 20, rect.y + 10, 40, 40)
+                        pygame.draw.rect(window, player_2_battleship_color, battleship_tile)
 
-            for rect in player_2_hits:
-                if rect in player_1_battleship:
-                    if rect not in player_2_battleship:
+                for rect in player_2_hits:
+                    if rect in player_1_battleship:
+                        if rect not in player_2_battleship:
+                            battleship_tile = pygame.Rect(rect.x + 20, rect.y + 10, 40, 40)
+                            pygame.draw.rect(window, player_1_battleship_color, battleship_tile)
+                        else:
+                            battleship1_tile = pygame.Rect(rect.x + 10, rect.y + 15, 30, 30)
+                            pygame.draw.rect(window, player_1_battleship_color, battleship1_tile)
+                            battleship2_tile = pygame.Rect(rect.x + 45, rect.y + 15, 30, 30)
+                            pygame.draw.rect(window, player_2_battleship_color, battleship2_tile)
+                    if rect not in player_1_battleship:
+                        if rect not in player_2_battleship:
+                            battleship_tile = pygame.Rect(rect.x + 20, rect.y + 10, 40, 40)
+                            pygame.draw.rect(window, (255, 255, 255), battleship_tile)
+            elif not show_own_battleship:
+                for rect in player_2_hits:
+                    if rect in player_1_battleship:
                         battleship_tile = pygame.Rect(rect.x + 20, rect.y + 10, 40, 40)
                         pygame.draw.rect(window, player_1_battleship_color, battleship_tile)
                     else:
-                        battleship1_tile = pygame.Rect(rect.x + 10, rect.y + 15, 30, 30)
-                        pygame.draw.rect(window, player_1_battleship_color, battleship1_tile)
-                        battleship2_tile = pygame.Rect(rect.x + 45, rect.y + 15, 30, 30)
-                        pygame.draw.rect(window, player_2_battleship_color, battleship2_tile)
-                if rect not in player_1_battleship:
-                    if rect not in player_2_battleship:
                         battleship_tile = pygame.Rect(rect.x + 20, rect.y + 10, 40, 40)
                         pygame.draw.rect(window, (255, 255, 255), battleship_tile)
     elif game_over:
@@ -448,19 +466,21 @@ while game_running:
             elif game_scene == 'Game Started':
                 if back_button_rect.collidepoint(x, y):
                     game_scene = 'Main menu'
+                    game_winner = 0
                     player_1_battleship = []
                     player_2_battleship = []
                     player_1_hits = []
                     player_2_hits = []
                 else:
                     for element in grid_rectangles_list:
-                        if element.collidepoint(x, y):
-                            if player_turn == 1:
-                                player_1_hits.append(element)
-                                player_turn = 2
-                            elif player_turn == 2:
-                                player_2_hits.append(element)
-                                player_turn = 1
+                        if not is_game_over():
+                            if element.collidepoint(x, y):
+                                if player_turn == 1:
+                                    player_1_hits.append(element)
+                                    player_turn = 2
+                                elif player_turn == 2:
+                                    player_2_hits.append(element)
+                                    player_turn = 1
 
     if game_scene == 'Main menu':
         draw_main_menu_scene()
